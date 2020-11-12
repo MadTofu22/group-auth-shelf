@@ -6,8 +6,8 @@ const router = express.Router();
  * Get all of the items on the shelf
  */
 router.get('/', (req, res) => {
-  const queryText = `SELECT * FROM "item";`;
-    pool.query(queryText)
+  const queryText = `SELECT * FROM "item" where "item"."user_id" =$1;`
+    pool.query(queryText, [req.user.id])
         .then( (result) => {
             res.send(result.rows);
         })
@@ -20,9 +20,18 @@ router.get('/', (req, res) => {
 /**
  * Add an item for the logged in user to the shelf
  */
-router.post('/', (req, res) => {
-  // code here
-});
+// router.post('/', (req, res) => {
+//   // code here
+//   const queryText = `SELECT * FROM "item" where "item"."user_id" =$1;`
+//     pool.query(queryText, [req.user.id])
+//         .then( (result) => {
+//             res.send(result.rows);
+//         })
+//         .catch( (error) => {
+//             console.log(`Error on query ${error}`);
+//             res.sendStatus(500);
+//         });
+// });
 
 /**
  * Delete an item if it's something the logged in user added

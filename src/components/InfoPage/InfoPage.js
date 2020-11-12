@@ -33,6 +33,16 @@ class InfoPage extends React.Component {
       <div>
         <p>Info Page</p>
         {JSON.stringify(this.props.reduxState.shelf.shelfItems)}
+        <table>
+          <tr><th>Image</th><th>Shelf Item</th></tr>
+          {this.props.reduxState.shelf.shelfItems.map((shelfItem) => {
+            return <tr>
+                      <td><img alt={shelfItem.description} src={shelfItem.image_url}></img></td>
+                      <td>{shelfItem.description}</td>
+                  </tr>
+          })}
+          
+        </table>
       </div>
     )
   }
