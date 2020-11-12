@@ -20,6 +20,11 @@ import {connect} from 'react-redux';
 
 class InfoPage extends React.Component {
 
+  state= {
+    image_url: '',
+    shelfItem: ''
+  }
+
   componentDidMount() {
     this.getShelfItems();
   }
@@ -28,11 +33,28 @@ class InfoPage extends React.Component {
     this.props.dispatch({type: 'FETCH_SHELF_ITEMS'});
   }
 
+  handleChange = (event, value) => {
+    console.log('add new item')
+    this.setState({
+      [value]: event.target.value,
+      ...this.state 
+    })
+    console.log(this.state)
+  }
+  
+  onClickSubmit = () => {
+    this.props.dispatch({type: 'ADD_SHELF_ITEMS',
+    payload: this.state});
+  }
+
   render() {
     return (
       <div>
         <p>Info Page</p>
         {JSON.stringify(this.props.reduxState.shelf.shelfItems)}
+        <input placeholder='shelf item' onChange={(event) => this.handleChange(event, 'shelfItem')}/>
+        <input placeholder='image_url' onChange={(event) => this.handleChange(event, 'image_url')}/>
+        <button onClick={this.onClickSubmit}>Submit</button>
         <table>
           <tr><th>Image</th><th>Shelf Item</th></tr>
           {this.props.reduxState.shelf.shelfItems.map((shelfItem) => {

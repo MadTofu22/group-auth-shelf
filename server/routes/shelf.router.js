@@ -20,18 +20,19 @@ router.get('/', (req, res) => {
 /**
  * Add an item for the logged in user to the shelf
  */
-// router.post('/', (req, res) => {
-//   // code here
-//   const queryText = `SELECT * FROM "item" where "item"."user_id" =$1;`
-//     pool.query(queryText, [req.user.id])
-//         .then( (result) => {
-//             res.send(result.rows);
-//         })
-//         .catch( (error) => {
-//             console.log(`Error on query ${error}`);
-//             res.sendStatus(500);
-//         });
-// });
+router.post('/', (req, res) => {
+  // code here
+  const queryText = `INSERT INTO "item" ("description", "image_url", "user_id")  VALUES ($1, $2, $3);`
+    console.log(req.body)
+    pool.query(queryText, [req.body.shelfItem, req.body.image_url, req.user.id])
+        .then( (result) => {
+            res.sendStatus(200);
+        })
+        .catch( (error) => {
+            console.log(`Error on query ${error}`);
+            res.sendStatus(500);
+        });
+});
 
 /**
  * Delete an item if it's something the logged in user added
