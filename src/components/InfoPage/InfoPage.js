@@ -48,6 +48,10 @@ class InfoPage extends React.Component {
     payload: this.state});
   }
 
+onClickDelete = (id) => {
+  this.props.dispatch({type: 'DELETE_SHELF_ITEM', payload: id });
+}
+
   render() {
     return (
       <div>
@@ -57,11 +61,12 @@ class InfoPage extends React.Component {
         <input placeholder='image_url' onChange={(event) => this.handleChange(event, 'image_url')}/>
         <button onClick={this.onClickSubmit}>Submit</button>
         <table>
-          <tr><th>Image</th><th>Shelf Item</th></tr>
+          <tr><th>Image</th><th>Shelf Item</th><th>Delete</th></tr>
           {this.props.reduxState.shelf.shelfItems.map((shelfItem) => {
-            return <tr>
+            return <tr key={shelfItem.id}>
                       <td><img alt={shelfItem.description} src={shelfItem.image_url}></img></td>
                       <td>{shelfItem.description}</td>
+                      <td><button onClick={() => this.onClickDelete(shelfItem.id)}>Delete</button></td>
                   </tr>
           })}
           

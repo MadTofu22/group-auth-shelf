@@ -4,6 +4,7 @@ import axios from 'axios';
 function* shelfSaga() {
     yield takeEvery ('FETCH_SHELF_ITEMS', fetchShelfItems);
     yield takeEvery ('ADD_SHELF_ITEMS', postShelfItems);
+    yield takeEvery ('DELETE_SHELF_ITEM', deleteShelfItems);
   }
 
 // GET route to retrieve all shelf items from server/DB then send to reducer
@@ -19,5 +20,10 @@ function* postShelfItems(action) {
 }
 
 // DELETE route to removed a single shelf item from the server/DB
+function* deleteShelfItems(action){
+  yield axios.delete(`/api/shelf/${action.payload}` );
+  yield put ({type: 'FETCH_SHELF_ITEMS'});
+}
+
 
 export default shelfSaga;
