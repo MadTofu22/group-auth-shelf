@@ -36,8 +36,9 @@ class InfoPage extends React.Component {
   handleChange = (event, value) => {
     console.log('add new item')
     this.setState({
+      ...this.state ,
       [value]: event.target.value,
-      ...this.state 
+      
     })
     console.log(this.state)
   }
